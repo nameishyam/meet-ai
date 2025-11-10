@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Toaster, toast } from "sonner";
 import { Loader2, Send, MessageSquare, X } from "lucide-react";
-import { ChatMessage } from "@/lib/types";
+import { ChatMessage, User } from "@/lib/types";
 
 function ChatSidebar({
   messages,
@@ -167,7 +167,7 @@ export default function InterviewPage({
 
   // Initialize Stream Video Client
   useEffect(() => {
-    const user = getUser();
+    const user = getUser() as User;
     if (!user || !user.id) {
       toast.error("You must be logged in.");
       router.push("/login");
@@ -210,7 +210,7 @@ export default function InterviewPage({
     initializeStream();
 
     return () => {
-      setClient(undefined);
+      setClient(null);
     };
   }, [meetingId, router]);
 
@@ -233,7 +233,7 @@ export default function InterviewPage({
 
     return () => {
       setCall(undefined);
-      call?.leave().catch((err) => {
+      call?.leave().catch((err: Error) => {
         console.error("Failed to leave the call", err);
       });
     };
