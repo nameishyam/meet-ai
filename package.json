@@ -5,11 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node ./scripts/start-with-migrate.sh",
-    "lint": "eslint .",
-    "generate:migration": "npx drizzle-kit generate --name='production-migrations' --out='./drizzle/migrations'",
-    "migrate": "npx drizzle-kit migrate",
-    "postbuild": "node ./scripts/postbuild.js"
+    "start": "next start",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
@@ -87,7 +84,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.31.5",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
