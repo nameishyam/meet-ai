@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "generate:migration": "bunx --bun drizzle-kit generate --name='name'",
-    "migrate": "bunx --bun drizzle-kit migrate",
+    "generate:migration": "npx drizzle-kit generate --name='production-migrations' --out='./drizzle/migrations'",
+    "migrate": "npx drizzle-kit migrate",
     "postbuild": "node ./scripts/postbuild.js"
   },
   "dependencies": {

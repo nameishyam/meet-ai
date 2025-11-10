@@ -5,11 +5,14 @@ try {
 
   if (env === "production") {
     console.log("🚀 Running Drizzle migration for production...");
-    execSync("bunx --bun drizzle-kit generate --name=auto_migration", {
-      stdio: "inherit",
-    });
+    execSync(
+      "npx drizzle-kit generate --name='production-migrations' --out='./drizzle/migrations'",
+      {
+        stdio: "inherit",
+      }
+    );
 
-    execSync("bunx --bun drizzle-kit migrate", { stdio: "inherit" });
+    execSync("npx drizzle-kit migrate", { stdio: "inherit" });
 
     console.log("✅ Drizzle migrations completed.");
   } else {
