@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "generate:migration": "bunx --bun drizzle-kit generate --name='name'",
     "migrate": "bunx --bun drizzle-kit migrate",
-    "postbuild": "cross-env NEXT_ENVIRONMENT=$NEXT_ENVIRONMENT node -e \"if (process.env.NEXT_ENVIRONMENT === 'production') { console.log('🚀 Running Drizzle migration for production...'); const { execSync } = require('child_process'); execSync('bunx --bun drizzle-kit generate --name=auto_migration', { stdio: 'inherit' }); execSync('bunx --bun drizzle-kit migrate', { stdio: 'inherit' }); } else { console.log('🧪 Skipping migration (NEXT_ENVIRONMENT not production).'); }\""
+    "postbuild": "node ./scripts/postbuild.js"
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
