@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node ./scripts/start-with-migrate.sh",
     "lint": "eslint .",
     "generate:migration": "npx drizzle-kit generate --name='production-migrations' --out='./drizzle/migrations'",
     "migrate": "npx drizzle-kit migrate",
