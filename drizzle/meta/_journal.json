@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1761656325283,
+      "tag": "0000_numerous_darkstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761737933344,
+      "tag": "0001_meetings-table-modification",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761794122099,
+      "tag": "0002_meetings-table-modification-2",
+      "breakpoints": true
+    }
+  ]
+}
