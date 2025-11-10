@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "generate:migration": "bunx --bun drizzle-kit generate --name='name'",
+    "migrate": "bunx --bun drizzle-kit migrate",
+    "postbuild": "cross-env NEXT_ENVIRONMENT=$NEXT_ENVIRONMENT node -e \"if (process.env.NEXT_ENVIRONMENT === 'production') { console.log('🚀 Running Drizzle migration for production...'); const { execSync } = require('child_process'); execSync('bunx --bun drizzle-kit generate --name=auto_migration', { stdio: 'inherit' }); execSync('bunx --bun drizzle-kit migrate', { stdio: 'inherit' }); } else { console.log('🧪 Skipping migration (NEXT_ENVIRONMENT not production).'); }\""
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.4",
@@ -84,6 +87,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "drizzle-kit": "^0.31.5",
     "eslint": "^9",
     "eslint-config-next": "16.0.0",
