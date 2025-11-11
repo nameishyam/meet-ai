@@ -36,7 +36,7 @@ const signupSchema = z.object({
 });
 
 export default function SignupForm() {
-  const form = useForm<z.infer<typeof signupSchema>>({
+  const signupForm = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       name: ``,
@@ -47,8 +47,10 @@ export default function SignupForm() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (values: z.infer<typeof signupSchema>) => {
+  const handleSignup = async (values: z.infer<typeof signupSchema>) => {
+    setIsLoading(true);
     try {
       if (values.password !== values.confirmPassword) {
         toast.error("Passwords do not match");
@@ -75,6 +77,8 @@ export default function SignupForm() {
       window.location.href = "/dashboard";
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -92,22 +96,26 @@ export default function SignupForm() {
             </Button>
           </CardAction>
         </CardHeader>
-        <Form {...form}>
+        <Form {...signupForm}>
           <form
-            onSubmit={form.handleSubmit(handleSubmit)}
+            onSubmit={signupForm.handleSubmit(handleSignup)}
             className="space-y-4"
           >
             <CardContent>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <FormField
-                    control={form.control}
+                    control={signupForm.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="xyz" {...field} />
+                          <Input
+                            placeholder="xyz"
+                            {...field}
+                            disabled={isLoading}
+                          />
                         </FormControl>
                         <FormDescription>
                           This is your public display name.
@@ -119,13 +127,17 @@ export default function SignupForm() {
                 </div>
                 <div className="grid gap-2">
                   <FormField
-                    control={form.control}
+                    control={signupForm.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="xyz@example.com" {...field} />
+                          <Input
+                            placeholder="xyz@example.com"
+                            {...field}
+                            disabled={isLoading}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -137,7 +149,7 @@ export default function SignupForm() {
                     <FormLabel>Password</FormLabel>
                   </div>
                   <FormField
-                    control={form.control}
+                    control={signupForm.control}
                     name="password"
                     render={({ field }) => (
                       <FormItem>
@@ -147,6 +159,7 @@ export default function SignupForm() {
                               type={showPassword ? "text" : "password"}
                               placeholder="••••••••"
                               {...field}
+                              disabled={isLoading}
                             />
                             <Button
                               type="button"
@@ -154,6 +167,7 @@ export default function SignupForm() {
                               size="sm"
                               className="absolute right-0 top-0 h-full px-3 py-2 hover:cursor-pointer"
                               onClick={() => setShowPassword(!showPassword)}
+                              disabled={isLoading}
                             >
                               {showPassword ? (
                                 <EyeOff className="h-4 w-4" />
@@ -173,7 +187,7 @@ export default function SignupForm() {
                     <FormLabel>Confirm Password</FormLabel>
                   </div>
                   <FormField
-                    control={form.control}
+                    control={signupForm.control}
                     name="confirmPassword"
                     render={({ field }) => (
                       <FormItem>
@@ -183,6 +197,7 @@ export default function SignupForm() {
                               type={showPassword ? "text" : "password"}
                               placeholder="••••••••"
                               {...field}
+                              disabled={isLoading}
                             />
                             <Button
                               type="button"
@@ -190,6 +205,7 @@ export default function SignupForm() {
                               size="sm"
                               className="absolute right-0 top-0 h-full px-3 py-2 hover:cursor-pointer"
                               onClick={() => setShowPassword(!showPassword)}
+                              disabled={isLoading}
                             >
                               {showPassword ? (
                                 <EyeOff className="h-4 w-4" />
@@ -207,8 +223,12 @@ export default function SignupForm() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button type="submit" className="w-full hover:cursor-pointer">
-                Sign Up
+              <Button
+                type="submit"
+                className="w-full hover:cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? "Creating account..." : "Sign Up"}
               </Button>
             </CardFooter>
           </form>
